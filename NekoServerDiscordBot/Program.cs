@@ -78,8 +78,9 @@ namespace NekoServerDiscordBot {
 
             var online = jObject["players"]["online"].ToString();
             var max = jObject["players"]["max"].ToString();
-            var user = "";
+            var user = "現在はいません";
             if(int.Parse(online) > 0) {
+                user = "";
                 foreach (var item in jObject["players"]["list"]) {
                     user += item + "\n";
                 }
