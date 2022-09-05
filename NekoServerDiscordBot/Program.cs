@@ -67,7 +67,7 @@ namespace NekoServerDiscordBot {
             var json = "";
             using (var webClient = new System.Net.WebClient()) {
                 webClient.Encoding = System.Text.Encoding.UTF8;
-                json = webClient.DownloadString("https://api.mcsrvstat.us/2/203.137.54.66:19132").Replace("\n", "");
+                json = webClient.DownloadString("https://api.mcsrvstat.us/2/45.76.48.177:19132").Replace("\n", "");
 
             }
             var jObject = JObject.Parse(json);
