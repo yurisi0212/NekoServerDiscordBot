@@ -46,6 +46,7 @@ namespace NekoServerDiscordBot {
                     await message.Channel.SendMessageAsync("取得中...");
                     return;
                 }
+
                 _get_now = true;
                 var embed = getEmbed();
                 await message.Channel.SendMessageAsync(embed: embed.Build());
@@ -70,6 +71,7 @@ namespace NekoServerDiscordBot {
                 json = webClient.DownloadString("https://api.mcsrvstat.us/2/45.76.48.177:19132").Replace("\n", "");
 
             }
+
             var jObject = JObject.Parse(json);
             if (!(bool)jObject["online"]) {
                 embed.AddField("現在の状況", "オフライン", true);
@@ -79,12 +81,17 @@ namespace NekoServerDiscordBot {
             var online = jObject["players"]["online"].ToString();
             var max = jObject["players"]["max"].ToString();
             var user = "現在はいません";
-            if(int.Parse(online) > 0) {
-                user = "";
-                foreach (var item in jObject["players"]["list"]) {
-                    user += item + "\n";
+            if (int.Parse(online) > 0) {
+                if (jObject["players"]["list"] == null) {
+                    user = "エラーで取得できなかったよ！ちょっとまってね！";
+                } else {
+                    user = "";
+                    foreach (var item in jObject["players"]["list"]) {
+                        user += item + "\n";
+                    }
                 }
             }
+
             embed.AddField("現在の状況", "オンライン");
             embed.AddField("サーバー内人数", online + " / " + max);
             embed.AddField("ユーザー", user);
